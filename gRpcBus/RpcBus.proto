@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+option csharp_namespace = "gRpcBus";
+package MsgRpcBus;
+service RpcBus {
+  rpc RequestSrv(BusRequest) returns(BusReply){}
+  rpc PollSrv(BusRequest) returns(stream BusReply){}
+   rpc PushSrv(stream BusRequest) returns( BusReply){}
+   rpc ChatSrv(stream BusRequest) returns(stream BusReply){}
+}
+message   BusRequest
+{
+  string name = 1;
+  string active=2;
+  int32 id = 3;
+ repeated string ReqJson = 4;
+ repeated bytes ReqBytes=5;
+ map<string, string> Args = 6;
+ string version=7;
+}
+message BusReply
+{
+    int32 id = 1;
+    int32 reqid=2;
+    repeated string RspJson = 3;
+    repeated bytes  RspBytes=4;
+ map<string, string> Args = 5;
+ string version=7;
+}
