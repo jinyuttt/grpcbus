@@ -4,7 +4,7 @@
    封装了客户端，服务端。  
    4种模式对应各种功能应用；  
 ## 实体  
- 1.客户端的请求实体RpcRequest
+ 1.客户端的请求实体RpcRequest  
     ReqJson属性：传输实体JSON格式  
 	ReqBytes属性:传输实体byte[]  
 	SrvName属性：作为C/S模式时，可设置为服务名称  
