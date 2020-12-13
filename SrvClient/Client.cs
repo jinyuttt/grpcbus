@@ -1,4 +1,5 @@
 ﻿using Grpc.Core;
+using Grpc.Core.Interceptors;
 using gRpcBus;
 using System;
 using System.Threading.Tasks;
@@ -99,7 +100,7 @@ namespace SrvClient
                 ChannelOption[2] { new ChannelOption("MaxReceiveMessageSize",MaxRecviceSize) ,
                  new ChannelOption("MaxSendMessageSize",MaxSendSize) };
             Channel channel = new Channel(Address, ChannelCredentials.Insecure,channelOptions);
-
+            channel.Intercept(new ClientLoggerInterceptor());
             var client = new gRpcBus.RpcBus.RpcBusClient(channel);
             var result = client.ChatSrv();
 
