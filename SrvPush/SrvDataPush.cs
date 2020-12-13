@@ -2,6 +2,7 @@
 using gRpcBus;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SrvPush
@@ -13,31 +14,47 @@ namespace SrvPush
     public class SrvDataPush<R> : ISrvPush<R>
     {
         public R RequestArg { get ; set ; }
-        IServerStreamWriter<BusReply> serverStream=null;
-        ServerCallContext callContext = null;
+
+        readonly IServerStreamWriter<BusReply> serverStream=null;
+        readonly ServerCallContext callContext = null;
         private readonly BlockingCollection<BusReply> block = null;
-       
+        int num = 0;
+
         public SrvDataPush(IServerStreamWriter<BusReply> responseStream, ServerCallContext context)
         {
             this.serverStream = responseStream;
             this.callContext = context;
             block = new BlockingCollection<BusReply>();
-            Start();
+           // Start();
         }
 
-        /// <summary>
-        /// 启动向客户端推送
-        /// </summary>
-        private void Start()
+
+        public Task Start()
         {
-            Task.Run(async () =>
+          return  Task.Run(async () =>
             {
                 foreach (var p in block.GetConsumingEnumerable())
                 {
-                    await serverStream.WriteAsync(p);
+                    await  serverStream.WriteAsync(p);
                 }
-              
             });
+        }
+
+        /// <summary>
+        /// 有数据推送
+        /// </summary>
+        public bool IsCan
+        {
+            get { return !block.IsCompleted; }
+        }
+
+        public BusReply GetBusReply()
+        {
+            foreach (var p in block.GetConsumingEnumerable())
+            {
+                return p;
+            }
+            return null;
         }
 
         /// <summary>
@@ -50,6 +67,7 @@ namespace SrvPush
             BusReply busReply = new BusReply();
             var json= System.Text.Json.JsonSerializer.Serialize<V>(data);
             busReply.RspJson.Add(json);
+            busReply.Id = Interlocked.Increment(ref num);
             block.Add(busReply);
         }
 
@@ -65,6 +83,7 @@ namespace SrvPush
                 BusReply busReply = new BusReply();
                 var json = System.Text.Json.JsonSerializer.Serialize<V>(p);
                 busReply.RspJson.Add(json);
+                busReply.Id = Interlocked.Increment(ref num);
                 block.Add(busReply);
                
             }

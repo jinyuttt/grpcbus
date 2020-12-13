@@ -5,7 +5,12 @@ using System.Threading.Tasks;
 
 namespace SrvClient
 {
-    public class ClientPoll<T> : IPoll<T>
+
+    /// <summary>
+    /// 抽取服务端批量传输
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    internal class ClientPoll<T> : IPoll<T>
     {
         private readonly AsyncServerStreamingCall<BusReply> result;
         private readonly Channel channel;
@@ -17,7 +22,7 @@ namespace SrvClient
             block = new BlockingCollection<RspResult>();
             Start();
         }
-        private void Start()
+        private  void Start()
         {
             Task.Run(async () =>
             {
@@ -26,8 +31,8 @@ namespace SrvClient
                 {
                     block.Add(result.ResponseStream.Current.ConvertResult());
                 }
-              //  block.CompleteAdding();
-             // await  channel.ShutdownAsync();
+                block.CompleteAdding();
+                await channel.ShutdownAsync();
             });
         }
 

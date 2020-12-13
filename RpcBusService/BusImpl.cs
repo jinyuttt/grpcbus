@@ -1,6 +1,8 @@
 ﻿using Grpc.Core;
 using gRpcBus;
 using SrvPush;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RpcBusService
@@ -28,32 +30,52 @@ namespace RpcBusService
 
         public override Task<BusReply> PushSrv(IAsyncStreamReader<BusRequest> requestStream, ServerCallContext context)
         {
-            var result = Task.Run(async () =>
-            {
-                while (await requestStream.MoveNext())
+           
+                while (requestStream.MoveNext().Result)
                 {
-                    await RequestSrv(requestStream.Current, context);
+                     RequestSrv(requestStream.Current, context);
                 }
-            });
+            
+                Console.WriteLine("退出");
+           
+
+            
             return Task.FromResult(new BusReply());
         }
 
         public override Task PollSrv(BusRequest request, IServerStreamWriter<BusReply> responseStream, ServerCallContext context)
         {
-            var result = Task.Run(() =>
-            {
-                var push = new SrvDataPush<T>(responseStream, context);
-                pollService(push);
-            });
+           
+            var push = new SrvDataPush<T>(responseStream, context);
+            var result = Task.Run(async () =>
+             {
+                
+                 pollService(push);
+                 while (push.IsCan)
+                 {
+                     var obj = push.GetBusReply();
+
+                     await responseStream.WriteAsync(obj);
+                 }
+                 
+             });
             return result;
         }
         public override Task ChatSrv(IAsyncStreamReader<BusRequest> requestStream, IServerStreamWriter<BusReply> responseStream, ServerCallContext context)
         {
-            var result = Task.Run(() =>
+            var push = new SrvChat<T>(requestStream, responseStream, context);
+           
+            var result = Task.Run(async () =>
             {
-                var push = new SrvChat<T>(requestStream,responseStream, context);
                 chatService(push);
+                while (push.IsCan)
+                {
+                    var obj = push.GetBusReply();
+
+                    await responseStream.WriteAsync(obj);
+                }
             });
+            
             return result;
         }
     }

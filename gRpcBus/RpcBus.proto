@@ -2,27 +2,30 @@
 option csharp_namespace = "gRpcBus";
 package MsgRpcBus;
 service RpcBus {
-  rpc RequestSrv(BusRequest) returns(BusReply){}
-  rpc PollSrv(BusRequest) returns(stream BusReply){}
-   rpc PushSrv(stream BusRequest) returns( BusReply){}
-   rpc ChatSrv(stream BusRequest) returns(stream BusReply){}
+  rpc RequestSrv(BusRequest) returns(BusReply){}//请求-回复
+  rpc PollSrv(BusRequest) returns(stream BusReply){}//请求-批量回复
+   rpc PushSrv(stream BusRequest) returns( BusReply){}//批量传输-回复
+   rpc ChatSrv(stream BusRequest) returns(stream BusReply){}//批量传输-批量回复
 }
 message   BusRequest
 {
-  string name = 1;
-  string active=2;
-  int32 id = 3;
- repeated string ReqJson = 4;
- repeated bytes ReqBytes=5;
- map<string, string> Args = 6;
- string version=7;
+  string name = 1;//服务名称
+  string active=2;//服务方法
+  int32 id = 3;//客户端ID
+  repeated string ReqJson = 4;//数据JSON
+ repeated bytes ReqBytes=5;//数据Byte[]
+ map<string, string> Args = 6;//其它参数
+ string version=7;//客户端版本
 }
 message BusReply
 {
-    int32 id = 1;
-    int32 reqid=2;
-    repeated string RspJson = 3;
-    repeated bytes  RspBytes=4;
- map<string, string> Args = 5;
- string version=7;
+    int32 id = 1;//服务端ID
+    int32 reqid=2;//客户端ID
+    repeated string RspJson = 3;//返回数据JSON
+    repeated bytes  RspBytes=4;//返回数据Byte[]
+    map<string, string> Args = 5;//其它返回数据
+    int32 errorcode=6;//错误编号
+    string  errormessage=7;//错误信息
+   
+    string version=8;//服务端版本
 }

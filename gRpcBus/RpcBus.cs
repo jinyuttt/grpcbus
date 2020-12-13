@@ -29,22 +29,22 @@ namespace gRpcBus {
             "c29uGAQgAygJEhAKCFJlcUJ5dGVzGAUgAygMEi0KBEFyZ3MYBiADKAsyHy5N",
             "c2dScGNCdXMuQnVzUmVxdWVzdC5BcmdzRW50cnkSDwoHdmVyc2lvbhgHIAEo",
             "CRorCglBcmdzRW50cnkSCwoDa2V5GAEgASgJEg0KBXZhbHVlGAIgASgJOgI4",
-            "ASKzAQoIQnVzUmVwbHkSCgoCaWQYASABKAUSDQoFcmVxaWQYAiABKAUSDwoH",
+            "ASLcAQoIQnVzUmVwbHkSCgoCaWQYASABKAUSDQoFcmVxaWQYAiABKAUSDwoH",
             "UnNwSnNvbhgDIAMoCRIQCghSc3BCeXRlcxgEIAMoDBIrCgRBcmdzGAUgAygL",
-            "Mh0uTXNnUnBjQnVzLkJ1c1JlcGx5LkFyZ3NFbnRyeRIPCgd2ZXJzaW9uGAcg",
-            "ASgJGisKCUFyZ3NFbnRyeRILCgNrZXkYASABKAkSDQoFdmFsdWUYAiABKAk6",
-            "AjgBMvcBCgZScGNCdXMSOgoKUmVxdWVzdFNydhIVLk1zZ1JwY0J1cy5CdXNS",
-            "ZXF1ZXN0GhMuTXNnUnBjQnVzLkJ1c1JlcGx5IgASOQoHUG9sbFNydhIVLk1z",
-            "Z1JwY0J1cy5CdXNSZXF1ZXN0GhMuTXNnUnBjQnVzLkJ1c1JlcGx5IgAwARI5",
-            "CgdQdXNoU3J2EhUuTXNnUnBjQnVzLkJ1c1JlcXVlc3QaEy5Nc2dScGNCdXMu",
-            "QnVzUmVwbHkiACgBEjsKB0NoYXRTcnYSFS5Nc2dScGNCdXMuQnVzUmVxdWVz",
-            "dBoTLk1zZ1JwY0J1cy5CdXNSZXBseSIAKAEwAUIKqgIHZ1JwY0J1c2IGcHJv",
-            "dG8z"));
+            "Mh0uTXNnUnBjQnVzLkJ1c1JlcGx5LkFyZ3NFbnRyeRIRCgllcnJvcmNvZGUY",
+            "BiABKAUSFAoMZXJyb3JtZXNzYWdlGAcgASgJEg8KB3ZlcnNpb24YCCABKAka",
+            "KwoJQXJnc0VudHJ5EgsKA2tleRgBIAEoCRINCgV2YWx1ZRgCIAEoCToCOAEy",
+            "9wEKBlJwY0J1cxI6CgpSZXF1ZXN0U3J2EhUuTXNnUnBjQnVzLkJ1c1JlcXVl",
+            "c3QaEy5Nc2dScGNCdXMuQnVzUmVwbHkiABI5CgdQb2xsU3J2EhUuTXNnUnBj",
+            "QnVzLkJ1c1JlcXVlc3QaEy5Nc2dScGNCdXMuQnVzUmVwbHkiADABEjkKB1B1",
+            "c2hTcnYSFS5Nc2dScGNCdXMuQnVzUmVxdWVzdBoTLk1zZ1JwY0J1cy5CdXNS",
+            "ZXBseSIAKAESOwoHQ2hhdFNydhIVLk1zZ1JwY0J1cy5CdXNSZXF1ZXN0GhMu",
+            "TXNnUnBjQnVzLkJ1c1JlcGx5IgAoATABQgqqAgdnUnBjQnVzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::gRpcBus.BusRequest), global::gRpcBus.BusRequest.Parser, new[]{ "Name", "Active", "Id", "ReqJson", "ReqBytes", "Args", "Version" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, }),
-            new pbr::GeneratedClrTypeInfo(typeof(global::gRpcBus.BusReply), global::gRpcBus.BusReply.Parser, new[]{ "Id", "Reqid", "RspJson", "RspBytes", "Args", "Version" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
+            new pbr::GeneratedClrTypeInfo(typeof(global::gRpcBus.BusReply), global::gRpcBus.BusReply.Parser, new[]{ "Id", "Reqid", "RspJson", "RspBytes", "Args", "Errorcode", "Errormessage", "Version" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { null, })
           }));
     }
     #endregion
@@ -98,6 +98,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 1;
     private string name_ = "";
+    /// <summary>
+    ///服务名称
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Name {
       get { return name_; }
@@ -109,6 +112,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "active" field.</summary>
     public const int ActiveFieldNumber = 2;
     private string active_ = "";
+    /// <summary>
+    ///服务方法
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Active {
       get { return active_; }
@@ -120,6 +126,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 3;
     private int id_;
+    /// <summary>
+    ///客户端ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Id {
       get { return id_; }
@@ -133,6 +142,9 @@ namespace gRpcBus {
     private static readonly pb::FieldCodec<string> _repeated_reqJson_codec
         = pb::FieldCodec.ForString(34);
     private readonly pbc::RepeatedField<string> reqJson_ = new pbc::RepeatedField<string>();
+    /// <summary>
+    ///数据JSON
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<string> ReqJson {
       get { return reqJson_; }
@@ -143,6 +155,9 @@ namespace gRpcBus {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_reqBytes_codec
         = pb::FieldCodec.ForBytes(42);
     private readonly pbc::RepeatedField<pb::ByteString> reqBytes_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    ///数据Byte[]
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<pb::ByteString> ReqBytes {
       get { return reqBytes_; }
@@ -153,6 +168,9 @@ namespace gRpcBus {
     private static readonly pbc::MapField<string, string>.Codec _map_args_codec
         = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForString(18, ""), 50);
     private readonly pbc::MapField<string, string> args_ = new pbc::MapField<string, string>();
+    /// <summary>
+    ///其它参数
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::MapField<string, string> Args {
       get { return args_; }
@@ -161,6 +179,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "version" field.</summary>
     public const int VersionFieldNumber = 7;
     private string version_ = "";
+    /// <summary>
+    ///客户端版本
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Version {
       get { return version_; }
@@ -440,6 +461,8 @@ namespace gRpcBus {
       rspJson_ = other.rspJson_.Clone();
       rspBytes_ = other.rspBytes_.Clone();
       args_ = other.args_.Clone();
+      errorcode_ = other.errorcode_;
+      errormessage_ = other.errormessage_;
       version_ = other.version_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -452,6 +475,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "id" field.</summary>
     public const int IdFieldNumber = 1;
     private int id_;
+    /// <summary>
+    ///服务端ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Id {
       get { return id_; }
@@ -463,6 +489,9 @@ namespace gRpcBus {
     /// <summary>Field number for the "reqid" field.</summary>
     public const int ReqidFieldNumber = 2;
     private int reqid_;
+    /// <summary>
+    ///客户端ID
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Reqid {
       get { return reqid_; }
@@ -476,6 +505,9 @@ namespace gRpcBus {
     private static readonly pb::FieldCodec<string> _repeated_rspJson_codec
         = pb::FieldCodec.ForString(26);
     private readonly pbc::RepeatedField<string> rspJson_ = new pbc::RepeatedField<string>();
+    /// <summary>
+    ///返回数据JSON
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<string> RspJson {
       get { return rspJson_; }
@@ -486,6 +518,9 @@ namespace gRpcBus {
     private static readonly pb::FieldCodec<pb::ByteString> _repeated_rspBytes_codec
         = pb::FieldCodec.ForBytes(34);
     private readonly pbc::RepeatedField<pb::ByteString> rspBytes_ = new pbc::RepeatedField<pb::ByteString>();
+    /// <summary>
+    ///返回数据Byte[]
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<pb::ByteString> RspBytes {
       get { return rspBytes_; }
@@ -496,14 +531,48 @@ namespace gRpcBus {
     private static readonly pbc::MapField<string, string>.Codec _map_args_codec
         = new pbc::MapField<string, string>.Codec(pb::FieldCodec.ForString(10, ""), pb::FieldCodec.ForString(18, ""), 42);
     private readonly pbc::MapField<string, string> args_ = new pbc::MapField<string, string>();
+    /// <summary>
+    ///其它返回数据
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::MapField<string, string> Args {
       get { return args_; }
     }
 
+    /// <summary>Field number for the "errorcode" field.</summary>
+    public const int ErrorcodeFieldNumber = 6;
+    private int errorcode_;
+    /// <summary>
+    ///错误编号
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Errorcode {
+      get { return errorcode_; }
+      set {
+        errorcode_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "errormessage" field.</summary>
+    public const int ErrormessageFieldNumber = 7;
+    private string errormessage_ = "";
+    /// <summary>
+    ///错误信息
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Errormessage {
+      get { return errormessage_; }
+      set {
+        errormessage_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "version" field.</summary>
-    public const int VersionFieldNumber = 7;
+    public const int VersionFieldNumber = 8;
     private string version_ = "";
+    /// <summary>
+    ///服务端版本
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Version {
       get { return version_; }
@@ -530,6 +599,8 @@ namespace gRpcBus {
       if(!rspJson_.Equals(other.rspJson_)) return false;
       if(!rspBytes_.Equals(other.rspBytes_)) return false;
       if (!Args.Equals(other.Args)) return false;
+      if (Errorcode != other.Errorcode) return false;
+      if (Errormessage != other.Errormessage) return false;
       if (Version != other.Version) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -542,6 +613,8 @@ namespace gRpcBus {
       hash ^= rspJson_.GetHashCode();
       hash ^= rspBytes_.GetHashCode();
       hash ^= Args.GetHashCode();
+      if (Errorcode != 0) hash ^= Errorcode.GetHashCode();
+      if (Errormessage.Length != 0) hash ^= Errormessage.GetHashCode();
       if (Version.Length != 0) hash ^= Version.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -570,8 +643,16 @@ namespace gRpcBus {
       rspJson_.WriteTo(output, _repeated_rspJson_codec);
       rspBytes_.WriteTo(output, _repeated_rspBytes_codec);
       args_.WriteTo(output, _map_args_codec);
-      if (Version.Length != 0) {
+      if (Errorcode != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Errorcode);
+      }
+      if (Errormessage.Length != 0) {
         output.WriteRawTag(58);
+        output.WriteString(Errormessage);
+      }
+      if (Version.Length != 0) {
+        output.WriteRawTag(66);
         output.WriteString(Version);
       }
       if (_unknownFields != null) {
@@ -594,8 +675,16 @@ namespace gRpcBus {
       rspJson_.WriteTo(ref output, _repeated_rspJson_codec);
       rspBytes_.WriteTo(ref output, _repeated_rspBytes_codec);
       args_.WriteTo(ref output, _map_args_codec);
-      if (Version.Length != 0) {
+      if (Errorcode != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Errorcode);
+      }
+      if (Errormessage.Length != 0) {
         output.WriteRawTag(58);
+        output.WriteString(Errormessage);
+      }
+      if (Version.Length != 0) {
+        output.WriteRawTag(66);
         output.WriteString(Version);
       }
       if (_unknownFields != null) {
@@ -616,6 +705,12 @@ namespace gRpcBus {
       size += rspJson_.CalculateSize(_repeated_rspJson_codec);
       size += rspBytes_.CalculateSize(_repeated_rspBytes_codec);
       size += args_.CalculateSize(_map_args_codec);
+      if (Errorcode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Errorcode);
+      }
+      if (Errormessage.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Errormessage);
+      }
       if (Version.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Version);
       }
@@ -639,6 +734,12 @@ namespace gRpcBus {
       rspJson_.Add(other.rspJson_);
       rspBytes_.Add(other.rspBytes_);
       args_.Add(other.args_);
+      if (other.Errorcode != 0) {
+        Errorcode = other.Errorcode;
+      }
+      if (other.Errormessage.Length != 0) {
+        Errormessage = other.Errormessage;
+      }
       if (other.Version.Length != 0) {
         Version = other.Version;
       }
@@ -676,7 +777,15 @@ namespace gRpcBus {
             args_.AddEntriesFrom(input, _map_args_codec);
             break;
           }
+          case 48: {
+            Errorcode = input.ReadInt32();
+            break;
+          }
           case 58: {
+            Errormessage = input.ReadString();
+            break;
+          }
+          case 66: {
             Version = input.ReadString();
             break;
           }
@@ -714,7 +823,15 @@ namespace gRpcBus {
             args_.AddEntriesFrom(ref input, _map_args_codec);
             break;
           }
+          case 48: {
+            Errorcode = input.ReadInt32();
+            break;
+          }
           case 58: {
+            Errormessage = input.ReadString();
+            break;
+          }
+          case 66: {
             Version = input.ReadString();
             break;
           }

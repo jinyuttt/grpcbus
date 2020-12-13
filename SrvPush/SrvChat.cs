@@ -1,5 +1,6 @@
 ﻿using Grpc.Core;
 using gRpcBus;
+using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 
@@ -41,7 +42,7 @@ namespace SrvPush
                 {
                     await serverStream.WriteAsync(p);
                 }
-               
+                Console.WriteLine("退出");
             });
 
             Task.Run(async () =>
@@ -51,6 +52,7 @@ namespace SrvPush
                     blockPoll.Add(streamReader.Current);
                 }
                 blockPoll.CompleteAdding();
+                Console.WriteLine("客户端退出");
             });
         }
         public void Close()
@@ -67,9 +69,20 @@ namespace SrvPush
             blockPush.Add(p);
         }
 
-        public bool IsCan
+
+        public void Add(BusRequest request)
+        {
+            blockPoll.Add(request);
+        }
+
+        public bool IsRead
         {
             get { return !blockPoll.IsCompleted; }
+        }
+
+        public bool IsCan
+        {
+            get { return !blockPush.IsCompleted; }
         }
 
         public T Get()
@@ -80,6 +93,20 @@ namespace SrvPush
                 return System.Text.Json.JsonSerializer.Deserialize<T>(r.ReqJson[0]);
             }
             return default(T);
+        }
+
+        public BusReply GetBusReply()
+        {
+            foreach (var p in blockPush.GetConsumingEnumerable())
+            {
+                return p;
+            }
+            return null;
+        }
+
+        public void Complete()
+        {
+            blockPoll.CompleteAdding();
         }
     }
 }

@@ -5,25 +5,31 @@ using System.Threading.Tasks;
 
 namespace SrvClient
 {
+
+    /// <summary>
+    /// 客户端推送数据
+    /// </summary>
     internal class ClientPush : IPush
     {
-        private readonly AsyncClientStreamingCall<BusRequest, BusReply> result;
+        private readonly AsyncClientStreamingCall<BusRequest, BusReply>   asyncClient;
         private readonly Channel channel;
         private readonly BlockingCollection<BusRequest> block = null;
-        public ClientPush(AsyncClientStreamingCall<BusRequest, BusReply> result, Channel channel)
+        public ClientPush(AsyncClientStreamingCall<BusRequest, BusReply>   streamingCall, Channel channel)
         {
-            this.result = result;
+            this.asyncClient = streamingCall;
             this.channel = channel;
             block = new BlockingCollection<BusRequest>();
             Start();
         }
+
+
         private void  Start()
         {
             Task.Run(async () =>
             {
                 foreach (var p in block.GetConsumingEnumerable())
                 {
-                   await result.RequestStream.WriteAsync(p);
+                   await asyncClient.RequestStream.WriteAsync(p);
                 }
                 await  channel.ShutdownAsync();
             });

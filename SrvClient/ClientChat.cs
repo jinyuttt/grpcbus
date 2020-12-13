@@ -5,17 +5,26 @@ using System.Threading.Tasks;
 
 namespace SrvClient
 {
+
+    /// <summary>
+    /// 客户端处理双向批量传输
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     internal class ClientChat<T> : IChatSrv<T>
     {
-        private readonly AsyncDuplexStreamingCall<BusRequest, BusReply> result;
+        private readonly AsyncDuplexStreamingCall<BusRequest, BusReply>  streamingCall;
         private readonly Channel channel;
-        private readonly BlockingCollection<BusRequest> blockPush = null;
 
-        private readonly BlockingCollection<RspResult> blockPoll = null;
+        
+        private readonly BlockingCollection<BusRequest> blockPush = null;//发送队列
+
+        private readonly BlockingCollection<RspResult> blockPoll = null;//接收队列
         public ClientChat(AsyncDuplexStreamingCall<BusRequest, BusReply> result, Channel channel)
         {
-            this.result = result;
+            this.streamingCall = result;
             this.channel = channel;
+            blockPush = new BlockingCollection<BusRequest>();
+            blockPoll = new BlockingCollection<RspResult>();
             Start();
         }
         private void Start()
@@ -24,16 +33,16 @@ namespace SrvClient
             {
                 foreach (var p in blockPush.GetConsumingEnumerable())
                 {
-                    await result.RequestStream.WriteAsync(p);
+                    await streamingCall.RequestStream.WriteAsync(p);
                 }
                
             });
 
             Task.Run(async () =>
             {
-                while (await result.ResponseStream.MoveNext())
+                while (await streamingCall.ResponseStream.MoveNext())
                 {
-                    blockPoll.Add(result.ResponseStream.Current.ConvertResult());
+                    blockPoll.Add(streamingCall.ResponseStream.Current.ConvertResult());
                 }
                 blockPoll.CompleteAdding();
             });
@@ -51,6 +60,7 @@ namespace SrvClient
             p.ReqJson.Add(json);
             blockPush.Add(p);
         }
+
         public bool IsCan
         {
             get { return !blockPoll.IsCompleted; }

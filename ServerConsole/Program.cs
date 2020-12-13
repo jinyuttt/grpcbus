@@ -27,22 +27,23 @@ namespace ServerConsole
         }
         static BusReply Process(BusRequest request, ServerCallContext context)
         {
+            Console.WriteLine(request.ReqJson[0]);
             return new BusReply() {  Id=num++, Reqid=request.Id};
         }
         static void Poll(ISrvPush<string> chatClient)
         {
            
 
-            Thread sd = new Thread(() =>
-            {
+           
                 for (int i = 0; i < 1000; i++)
                 {
                     chatClient.Push(DateTime.Now.ToString());
+                    Thread.Sleep(1000);
                 }
+
                 chatClient.Close();
-            });
-            sd.IsBackground = true;
-            sd.Start();
+           
+         
         }
 
         static void ChatCom(IChatClient<string> chatClient)
@@ -63,6 +64,7 @@ namespace ServerConsole
                 for(int i=0;i<1000;i++)
                 {
                     chatClient.Push(DateTime.Now.ToString());
+                    Thread.Sleep(1000);
                 }
                 chatClient.Close();
             });
