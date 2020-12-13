@@ -22,6 +22,10 @@ using System.Threading.Tasks;
 
 namespace ServerConsole
 {
+
+    /// <summary>
+    /// 服务端拦截器
+    /// </summary>
     public class ServerLoggerInterceptor: Interceptor
     {
         private readonly ILogger<ServerLoggerInterceptor> _logger;

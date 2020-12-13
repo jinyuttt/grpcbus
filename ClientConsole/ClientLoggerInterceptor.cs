@@ -22,6 +22,10 @@ using System.Text;
 
 namespace ClientConsole
 {
+
+   /// <summary>
+   /// 客户端拦截器
+   /// </summary>
   public  class ClientLoggerInterceptor: Interceptor
     {
         public override AsyncUnaryCall<TResponse> AsyncUnaryCall<TRequest, TResponse>(
